@@ -35,7 +35,6 @@ public class LearnIF : MonoBehaviour
         }
 
         //狦だ计 >= 40 だ  干σ
-        // 狦だ计 <= 40   讽
         // 粂猭: else if (ガ狶) {ガ狶  ture 磅︽}
         // else if  if よ籔 else よ礚 
         else if (score >= 40)
@@ -43,6 +42,7 @@ public class LearnIF : MonoBehaviour
             print("干σ");
         }
 
+        // 狦だ计 <= 40   讽
         else
         {
             print("讽");
