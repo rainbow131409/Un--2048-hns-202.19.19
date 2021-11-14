@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;            // 引用
 using UnityEngine.SceneManagement;  // 引用 場景管理 命名空間
 
 /// <summary>
@@ -10,6 +11,8 @@ public class MenuManager : MonoBehaviour
     // Unity 按鈕與程式溝通
     // 1. 公開方法
     // 2. 按鈕設定點擊事件 On Click
+
+    public AudioMixer mixer;
 
     /// <summary>
     /// 開始遊戲
@@ -23,9 +26,17 @@ public class MenuManager : MonoBehaviour
     /// <summary>
     /// 遊戲設定
     /// </summary>
-    public void SettingGame() 
+    public void SettingGameBGM(float volume) 
     {
-    
+        mixer.SetFloat("音量BGM", volume);
+    }
+
+    /// <summary>
+    /// 遊戲設定
+    /// </summary>
+    public void SettingGameSFX(float volume)
+    {
+        mixer.SetFloat("音效SFX", volume);
     }
 
     /// <summary>
