@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Linq;
 
 /// <summary>
@@ -27,7 +28,7 @@ public class System2048 : MonoBehaviour
     /// <summary>
     /// 所有區塊資料
     /// </summary>
-    private BlockData[,] blocks = new BlockData[4, 4];
+    private BlockData[,] blocks = new BlockData[1, 4];
 
     /// <summary>
     /// 按下座標
@@ -213,7 +214,69 @@ public class System2048 : MonoBehaviour
             case Direction.Right:
                 break;
             case Direction.Left:
-                print("方向為左鍵");
+                for (int i = 0; i < blocks.GetLength(0); i++)
+                {
+                    for (int j = 0; j < blocks.GetLength(1); j++)
+                    {
+                        BlockData blockOriginal = new BlockData();
+                        BlockData blocksCheck = new BlockData();
+                        bool canMove = false;
+                        bool sameNumber = false;
+                        blockOriginal = blocks[i, j];
+                        
+                        // 如果 該區塊的數字 為零 就 繼續 (跳過此迴圈執行下個迴圈)
+                        if (j == 0 || blocks[i, j].number == 0) continue;
+
+                        for (int k = j - 1; k >= 0; k--)
+                        {
+                            print("檢查次數:" + k);
+
+                            if (blocks[i,k].number == 0)
+                            {
+                                blocksCheck = blocks[i, k];
+                                canMove = true;
+                            }
+                            else if (blocks[i,k].number == blockOriginal.number)
+                            {
+                                blocksCheck = blocks[i, k];
+                                canMove = true;
+                                sameNumber = true;
+                            }
+                        }
+
+                        if (canMove)
+                        {
+                            // 
+                            // 
+                            // 
+                            blockOriginal.goBlock.transform.position = blocksCheck.v2Position;
+                            blocksCheck.number = blockOriginal.number;
+                            blocksCheck.goBlock = blockOriginal.goBlock;
+                            blocksCheck.number = 0;
+                            blocksCheck.goBlock = null;
+
+                            if (sameNumber)
+                            {
+                                int number = blocksCheck.number * 2;
+                                blocksCheck.number = number;
+
+                                Destroy(blockOriginal.goBlock);
+                                blocksCheck.goBlock.transform.Find("數字").GetComponent<Text>().text = number.ToString();
+                            }
+                            else
+                            {
+                                blocksCheck.number = blockOriginal.number;
+                                blocksCheck.goBlock = blockOriginal.goBlock;
+                            }
+
+                            blockOriginal.number = 0;
+                            blockOriginal.goBlock = null;
+                        }
+                        
+                    }
+                }
+                PrintBlockData();
+
                 break;
             case Direction.Up:
                 break;
@@ -221,7 +284,10 @@ public class System2048 : MonoBehaviour
                 break;
         }
     }
+
+    
     #endregion
+
 }
 
 
